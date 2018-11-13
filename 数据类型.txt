@@ -1,0 +1,69 @@
+判断js类型的方法：
+
+基本类型：string,number,boolean
+
+特殊类型：undefined,null
+
+引用类型：Object,Function,Function,Array,RegExp,Date,...
+
+1.typeof
+
+typeof 返回一个表示数据类型的字符串，返回结果包括：number、boolean、string、object、undefined、function等6种数据类型。
+typeof 可以对JS基础数据类型做出准确的判断，而对于引用类型返回的基本上都是object.
+typeof ''; // string 有效
+typeof 1; // number 有效
+typeof true; //boolean 有效
+typeof undefined; //undefined 有效
+typeof null; //object 无效
+typeof [] ; //object 无效
+typeof new Function(); // function 有效
+typeof new Date(); //object 无效
+typeof new RegExp(); //object 无效
+
+2.instanceof
+
+instanceof 是用来判断 A 是否为 B 的实例对，表达式为：A instanceof B，如果A是B的实例，则返回true,否则返回false。
+instanceof 只能用来判断两个对象是否属于原型链的关系， 而不能获取对象的具体类型。
+
+[] instanceof Array; //true
+{} instanceof Object;//true
+new Date() instanceof Date;//true
+ 
+function Person(){};
+new Person() instanceof Person;
+ 
+[] instanceof Object; //true
+new Date() instanceof Object;//true
+new Person instanceof Object;//true
+
+3.constructor。null和undefined是无效的对象，因此是不会有constructor存在的。这两种类型的数据需要通过typeof来判断。js对象的constructor是不稳定的，
+这个主要体现在自定义对象上，当开发者重写prototype后，原有的constructor会丢失，constructor会默认为Object
+
+''.constructor == String  //true
+new Number(1).constructor == Number // true
+true.constructor == Boolean // true
+new Function().constructor == Function  //true
+new Date().constructor == Date //true
+new Error().constructor == Error // true
+[].constructor == Array // true
+
+4.Object.prototype.toString
+
+toString是Object原型对象上的一个方法。该方法默认返回其调用者的具体类型，更严格来说，是toString运行时this指向的对象类型。
+
+Object.prototype.toString.call('') ;   // [object String]
+Object.prototype.toString.call(1) ;    // [object Number]
+Object.prototype.toString.call(true) ; // [object Boolean]
+Object.prototype.toString.call(undefined) ; // [object Undefined]
+Object.prototype.toString.call(null) ; // [object Null]
+Object.prototype.toString.call(new Function()) ; // [object Function]
+Object.prototype.toString.call(new Date()) ; // [object Date]
+Object.prototype.toString.call([]) ; // [object Array]
+Object.prototype.toString.call(new RegExp()) ; // [object RegExp]
+Object.prototype.toString.call(new Error()) ; // [object Error]
+Object.prototype.toString.call(document) ; // [object HTMLDocument]
+Object.prototype.toString.call(window) ; //[object global] window是全局对象global的引用
+
+
+
+
